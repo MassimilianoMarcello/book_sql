@@ -23,7 +23,12 @@ const userControllers = {
         try {
             const strQuery = `SELECT * FROM users`;
             const result = await query(strQuery);
-            res.status(200).send(result);
+            res.status(200).render('layout', {
+                title: 'My goals',
+                body: 'includes/user/allUsers',
+                users:result,
+           
+            });
         } catch (err) {
             console.error(err);
             res.status(500).send('internal server error');
@@ -83,17 +88,20 @@ const userControllers = {
     },
     remove: async (req, res) => {
         try {
-            const { id } = req.params;
-            const strQuery = `DELETE  FROM users WHERE id=?`;
-            const params = [id];
-            const result = await query(strQuery, params);
-            res.status(200).send('User deleted successfully');
-            console.log(result);
+            const { id } = req.params;  // Ottieni l'ID dell'utente dall'URL
+            const strQuery = `DELETE FROM users WHERE id=?`;  // Query SQL per eliminare l'utente
+            const params = [id];  // Parametri per la query
+            const result = await query(strQuery, params);  // Esegui la query
+    
+            // Redirect alla pagina della lista utenti dopo l'eliminazione
+            res.status(200).redirect('/user/get');  // Modifica il percorso in base alle tue necessità
+            console.log(result);  // Log del risultato per il debug
         } catch (error) {
-            console.error(error); 
-            res.status(500).send('Internal Server Error'); 
+            console.error(error);  // Log dell'errore
+            res.status(500).send('Internal Server Error');  // Risposta in caso di errore
         }
     }
+    
 };
 
 export default userControllers;

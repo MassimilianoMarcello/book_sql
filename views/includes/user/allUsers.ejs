@@ -1,0 +1,31 @@
+<section>
+    <h1>Registered Users List</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Created At</th>
+                <th>Action</th> <!-- Aggiungi una colonna per le azioni -->
+            </tr>
+        </thead>
+        <tbody>
+            <% users.forEach(user => { %>
+            <tr>
+                <td><%= user.id %></td>
+                <td><%= user.email %></td>
+                <td><%= user.created_at %></td>
+                <td>
+                    <!-- Form per eliminare un utente -->
+                    <form action="/user/delete/<%= user.id %>?_method=DELETE" method="POST" onsubmit="return confirm('Are you sure you want delete this user?');" style="display: inline;">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</section>
+

@@ -10,6 +10,7 @@ const createBookTable = async () => {
                 year INT NOT NULL,
                 author  VARCHAR(255) NOT NULL,
                 price DECIMAL(10, 2) NOT NULL,
+                image_url VARCHAR(255),
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         `;

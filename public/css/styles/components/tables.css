@@ -1,0 +1,24 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 18px;
+  text-align: left;
+}
+table th, table td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+table th {
+  background-color: #3B82F6;
+  color: white;
+}
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+table tr:hover {
+  background-color: #FBBF24;
+  color: white;
+}
+
+/*# sourceMappingURL=tables.css.map */

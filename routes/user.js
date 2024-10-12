@@ -10,10 +10,11 @@ const {getLoginForm,getRegistrationForm, add, getAll,getOne,update,remove } =
 // routes
 router.get('/get', getAll);
 router.get('/get/:id', getOne);
-router.post('/add', add);
+router.post('/register', add);
 router.put('/update/:id', update);
 router.delete('/delete/:id', remove);
 router.get('/register', getRegistrationForm);
+router.post('/register', add);
 router.get('/login', getLoginForm);
 
 export default router;

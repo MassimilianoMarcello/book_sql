@@ -1,0 +1,57 @@
+// Variables
+@import '../variables.scss';
+$primary-color: #3498db; // Colore principale
+$text-color: white; // Colore del testo
+// $hover-color: darken($primary-color, 10%);
+
+// Navbar Styles
+.navbar {
+    background-color: $primary-color;
+    padding: 1rem;
+
+    &-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+
+        .site-title {
+            color: $text-color;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .auth-links {
+            a {
+                color: $text-color;
+                margin-left: 1rem;
+                text-decoration: none;
+                transition: color 0.3s;
+
+                &:hover {
+                    // color: $hover-color; 
+                }
+            }
+        }
+    }
+
+    .navbar-menu {
+        list-style: none;
+        display: flex;
+        padding: 0; 
+
+        li {
+            margin-right: 1rem;
+
+            a {
+                color: $text-color;
+                text-decoration: none;
+                transition: color 0.3s;
+
+                &:hover {
+                    // color: $hover-color;
+                }
+            }
+        }
+    }
+}
