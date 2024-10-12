@@ -1,0 +1,58 @@
+// sass/components/cards.scss
+
+// Import the variables file to use variables for styles
+@import '../variables';
+@import '../mixins';
+
+
+
+
+
+
+// Contenitore per i libri in griglia
+.book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); // Layout a griglia responsive
+    gap: 1.5rem; // Spazio tra le card
+    padding: 2rem;
+}
+
+// Stile per le card dei libri
+.book-card {
+    @include card; // Usa il mixin delle card
+
+    .book-image {
+        width: 100%;
+        height: auto;
+        max-height:14rem ;
+        max-width: 10rem;
+        object-fit: cover; // Mantiene le proporzioni dell'immagine
+        border-bottom: 1px solid $text-color;
+    }
+
+    .book-info {
+        padding: 1rem;
+
+        h2 {
+            margin-top: 0;
+            color: $primary-color;
+        }
+
+        p {
+            margin: 0.5rem 0;
+            color: $text-color;
+        }
+
+        .price {
+            font-weight: bold;
+            font-size: 1.25rem;
+            color: $primary-color;
+        }
+
+        .buy-button {
+            @include button-style; // Usa il mixin per i bottoni
+            margin-top: 1rem;
+        }
+    }
+}
+

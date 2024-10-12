@@ -1,0 +1,24 @@
+<div class="book-details">
+    <h1><%= book.name %></h1>
+    <p><strong>Author:</strong> <%= book.author %></p>
+    <p><strong>Publication Year:</strong> <%= book.year %></p>
+    <p><strong>Price:</strong> $<%= book.price %></p>
+
+    <% if (book.image_url) { %>
+        <div class="book-image">
+            <img src="<%= book.image_url %>" alt="<%= book.name %> cover image">
+        </div>
+    <% } else { %>
+        <p>No image available</p>
+    <% } %>
+
+    <div class="book-description">
+        <p><strong>Description:</strong> <%= book.description ? book.description : 'No description available' %></p>
+    </div>
+
+    <a href="/books" class="back-to-list">Back to Books List</a>
+    <a href="/books/update-book/<%= book.id %>" class="update-book-button">
+        Update Book
+    </a>
+</div>
+

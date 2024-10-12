@@ -1,0 +1,121 @@
+// styles.scss
+@import '../variables'; 
+@import '../mixins'; 
+
+// Login form
+.login-form {
+    @include form-style(400px);
+
+    .form-group {
+        margin-bottom: 1rem;
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: $text-color;
+        }
+
+        input {
+            @include input-style;
+        }
+    }
+
+    .submit-btn {
+        @include button-style;
+    }
+
+    .retour-button {
+        margin-top: 1rem;
+
+        a {
+            text-decoration: none;
+            color: $primary-color;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+// Registration form
+.register-form {
+    @include form-style(400px);
+
+    .form-group {
+        margin-bottom: 1rem;
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: $text-color;
+        }
+
+        .input-field {
+            @include input-style;
+        }
+    }
+
+    .submit-button {
+        @include button-style;
+    }
+
+    .retour-button {
+        display: block;
+        margin-top: 1rem;
+        text-align: center;
+
+        a {
+            text-decoration: none;
+            color: $primary-color;
+            transition: color 0.3s;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+// Add Book Form
+.add-book-form {
+    @include form-style(400px); // Usa il mixin per lo stile del modulo
+
+    .form-group {
+        margin-bottom: 1rem; // Spazio tra i gruppi di input
+
+        label {
+            display: block; // Rende il label un blocco
+            margin-bottom: 0.5rem; // Spazio sotto l'etichetta
+            font-weight: bold; // Grassetto per l'etichetta
+            color: $text-color; // Colore del testo definito in variables.scss
+        }
+
+        .input-field {
+            @include input-style; // Usa il mixin per lo stile degli input
+        }
+    }
+
+    .submit-button {
+        @include button-style; // Usa il mixin per lo stile del pulsante
+        width: 100%; // Larghezza totale per il pulsante
+    }
+
+    .retour-button {
+        display: block; // Rende il bottone un blocco
+        margin-top: 1rem; // Margine superiore
+        text-align: center; // Centra il testo
+
+        a {
+            text-decoration: none; // Rimuove la sottolineatura
+            color: $primary-color; // Colore del testo
+            transition: color 0.3s; // Transizione per il colore
+
+            &:hover {
+                text-decoration: underline; // Sottolinea al passaggio del mouse
+            }
+        }
+    }
+}

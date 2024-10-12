@@ -1,0 +1,65 @@
+@import '../variables';
+@import '../mixins';
+
+// Container principale per i dettagli del libro
+.book-details {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: $background-color;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+    .book-card {
+        display: flex;
+        flex-direction: row;
+        gap: 2rem;
+
+        .book-image {
+            max-width: 200px;
+            height: auto;
+            border-radius: $border-radius;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .book-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            h1 {
+                margin: 0;
+                color: $primary-color;
+                font-size: 2rem;
+            }
+
+            p {
+                margin: 0.5rem 0;
+                color: $text-color;
+
+                &.price {
+                    font-size: 1.5rem;
+                    font-weight: bold;
+                    color: $primary-color;
+                }
+            }
+        }
+    }
+
+    .back-button {
+        margin-top: 2rem;
+
+        a {
+            text-decoration: none;
+            color: $primary-color;
+            font-weight: bold;
+            transition: color 0.3s;
+
+            // &:hover {
+            //     color: darken($primary-color, 10%);
+            //     text-decoration: underline;
+            // }
+        }
+    }
+}

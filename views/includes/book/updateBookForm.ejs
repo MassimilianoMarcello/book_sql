@@ -1,0 +1,88 @@
+<form action="/books/<%= book.id %>?_method=PUT" method="POST" class="update-book-form">
+    <div class="form-group">
+        <label for="name">Book Name</label>
+        <input 
+            type="text" 
+            id="name" 
+            name="name" 
+            value="<%= book.name %>" 
+            required 
+            class="input-field"
+            placeholder="Enter the book name" 
+        >
+    </div>
+    
+    <div class="form-group">
+        <label for="year">Publication Year</label>
+        <input 
+            type="number" 
+            id="year" 
+            name="year" 
+            value="<%= book.year %>" 
+            required 
+            class="input-field"
+            placeholder="Enter the publication year" 
+        >
+    </div>
+
+    <div class="form-group">
+        <label for="author">Author</label>
+        <input 
+            type="text" 
+            id="author" 
+            name="author" 
+            value="<%= book.author %>" 
+            required 
+            class="input-field"
+            placeholder="Enter the author's name" 
+        >
+    </div>
+
+    <div class="form-group">
+        <label for="price">Price</label>
+        <input 
+            type="number" 
+            id="price" 
+            name="price" 
+            value="<%= book.price %>" 
+            required 
+            class="input-field"
+            placeholder="Enter the book price" 
+        >
+    </div>
+
+    <div class="form-group">
+        <label for="image_url">Image URL</label>
+        <input 
+            type="text" 
+            id="image_url" 
+            name="image_url" 
+            value="<%= book.image_url %>" 
+            class="input-field"
+            placeholder="Enter the image URL" 
+        >
+    </div>
+
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea 
+            id="description" 
+            name="description" 
+            required 
+            class="input-field"
+            placeholder="Enter the book description"
+        ><%= book.description %></textarea>
+    </div>
+
+    <button 
+        type="submit" 
+        class="submit-button"
+    >
+        Update Book
+    </button>
+</form>
+
+<button class="retour-button mt-4">
+    <a href="/books" class="text-blue-600 hover:underline">Back to Books List</a>
+</button>
+

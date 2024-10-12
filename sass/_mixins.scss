@@ -1,0 +1,73 @@
+// mixins.scss
+@import './variables.scss';
+
+@mixin form-style($max-width) {
+    display: flex;
+    flex-direction: column;
+    max-width: $max-width;
+    margin: 0 auto;
+    padding: 1.5rem;
+    background-color: $background-color;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@mixin input-style {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+    color: $text-color;
+    transition: border-color 0.2s;
+
+    &:focus {
+        border-color: $primary-color;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba($primary-color, 0.5);
+    }
+}
+
+@mixin button-style {
+    padding: 0.75rem;
+    background-color: $primary-color;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: $border-radius;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    // &:hover {
+    //     background-color: color.scale($primary-color, $lightness: -10%);
+    // }
+}
+
+@mixin card {
+    background-color: #fff;  
+    max-width: 45%;              // Colore di sfondo bianco
+    border: 1px solid $border-color;       // Bordo solido con colore dal file variables
+    border-radius: $border-radius;         // Angoli arrotondati
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); // Ombra leggera per profondità
+    padding: $base-padding;                // Padding di base
+    margin: $base-margin;                  // Margine di base
+    transition: transform 0.3s ease, box-shadow 0.3s ease; // Transizione per hover
+
+    &:hover {
+        transform: translateY(-5px);       // Effetto di sollevamento al passaggio del mouse
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); // Ombra più marcata all'hover
+    }
+
+    h2 {
+        margin-top: 0;                     // Rimuovi il margine superiore
+        color: $primary-color;             // Colore primario per il titolo
+    }
+
+    p {
+        margin-bottom: 0;                  // Rimuovi margine inferiore per paragrafi
+        color: $text-color;                // Colore del testo
+    }
+}
+

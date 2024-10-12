@@ -1,0 +1,19 @@
+<main class="container">
+    <h1>Book Store</h1>
+    <div class="book-grid">
+        <% books.forEach(book => { %>
+            <div class="card book-card">
+                <img src="<%= book.image_url %>" alt="<%= book.name %>" class="book-image">
+                <div class="book-info">
+                    <h2><%= book.name %></h2>
+                    <p>Author: <%= book.author %></p>
+                    <p>Year: <%= book.year %></p>
+                    <p class="price">€<%= parseFloat(book.price).toFixed(2) %></p>
+                    <a href="/books/books/<%= book.id %>" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        View Details
+                    </a>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</main>

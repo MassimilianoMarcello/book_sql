@@ -66,21 +66,188 @@
   text-decoration: underline;
 }
 
-.card {
+.register-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background-color: #f4f4f4;
+  border: 1px solid #D1D5DB;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.register-form .form-group {
+  margin-bottom: 1rem;
+}
+.register-form .form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #333;
+}
+.register-form .form-group .input-field {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #D1D5DB;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  color: #333;
+  transition: border-color 0.2s;
+}
+.register-form .form-group .input-field:focus {
+  border-color: #3B82F6;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+}
+.register-form .submit-button {
+  padding: 0.75rem;
+  background-color: #3B82F6;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.register-form .retour-button {
+  display: block;
+  margin-top: 1rem;
+  text-align: center;
+}
+.register-form .retour-button a {
+  text-decoration: none;
+  color: #3B82F6;
+  transition: color 0.3s;
+}
+.register-form .retour-button a:hover {
+  text-decoration: underline;
+}
+
+.add-book-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background-color: #f4f4f4;
+  border: 1px solid #D1D5DB;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.add-book-form .form-group {
+  margin-bottom: 1rem;
+}
+.add-book-form .form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #333;
+}
+.add-book-form .form-group .input-field {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #D1D5DB;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  color: #333;
+  transition: border-color 0.2s;
+}
+.add-book-form .form-group .input-field:focus {
+  border-color: #3B82F6;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+}
+.add-book-form .submit-button {
+  padding: 0.75rem;
+  background-color: #3B82F6;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 100%;
+}
+.add-book-form .retour-button {
+  display: block;
+  margin-top: 1rem;
+  text-align: center;
+}
+.add-book-form .retour-button a {
+  text-decoration: none;
+  color: #3B82F6;
+  transition: color 0.3s;
+}
+.add-book-form .retour-button a:hover {
+  text-decoration: underline;
+}
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.book-card {
   background-color: #fff;
-  border: 1px solid #333;
+  max-width: 45%;
+  border: 1px solid #D1D5DB;
   border-radius: 4px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding: 16px;
   margin: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.card h2 {
+.book-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+.book-card h2 {
   margin-top: 0;
   color: #3B82F6;
 }
-.card p {
+.book-card p {
   margin-bottom: 0;
   color: #333;
+}
+.book-card .book-image {
+  width: 100%;
+  height: auto;
+  max-height: 14rem;
+  max-width: 10rem;
+  object-fit: cover;
+  border-bottom: 1px solid #333;
+}
+.book-card .book-info {
+  padding: 1rem;
+}
+.book-card .book-info h2 {
+  margin-top: 0;
+  color: #3B82F6;
+}
+.book-card .book-info p {
+  margin: 0.5rem 0;
+  color: #333;
+}
+.book-card .book-info .price {
+  font-weight: bold;
+  font-size: 1.25rem;
+  color: #3B82F6;
+}
+.book-card .book-info .buy-button {
+  padding: 0.75rem;
+  background-color: #3B82F6;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 1rem;
 }
 
 table {
@@ -140,6 +307,55 @@ table tr:hover {
   text-decoration: none;
   transition: color 0.3s;
 }
+.book-details {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #f4f4f4;
+  border: 1px solid #D1D5DB;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.book-details .book-card {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+.book-details .book-card .book-image {
+  max-width: 200px;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.book-details .book-card .book-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.book-details .book-card .book-info h1 {
+  margin: 0;
+  color: #3B82F6;
+  font-size: 2rem;
+}
+.book-details .book-card .book-info p {
+  margin: 0.5rem 0;
+  color: #333;
+}
+.book-details .book-card .book-info p.price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #3B82F6;
+}
+.book-details .back-button {
+  margin-top: 2rem;
+}
+.book-details .back-button a {
+  text-decoration: none;
+  color: #3B82F6;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
 body {
   font-family: "Arial", sans-serif;
   color: #333;
