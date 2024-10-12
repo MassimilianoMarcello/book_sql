@@ -53,22 +53,24 @@ const bookControllers = {
     // Add a book
     add: async (req, res) => {
         try {
-            const { name, year, author, price, image_url,description } = req.body;
-
+            const { name, year, author, price, image_url, description } = req.body;
+    
             // Validazione semplice
-            if (!name || !year || !author || isNaN(price)|| !description) {
+            if (!name || !year || !author || isNaN(price) || !description) {
                 return res.status(400).send('All fields are required and price must be a number');
             }
-
-            const sqlQuery = `INSERT INTO books (name, year, author, price, image_url,description) VALUES (?, ?, ?, ?, ?)`;
-            const params = [name, parseInt(year), author, parseFloat(price), image_url || null];
+    
+            const sqlQuery = `INSERT INTO books (name, year, author, price, image_url, description) VALUES (?, ?, ?, ?, ?, ?)`;
+            const params = [name, parseInt(year), author, parseFloat(price), image_url || null, description]; // Assicurati di includere description
             const result = await query(sqlQuery, params);
+    
             res.status(201).send('Book added successfully');
         } catch (error) {
             console.error(error);
             res.status(500).send('Internal Server Error');
         }
     },
+    
     // add book form
     updateBookForm: async (req, res) => {
         try {
@@ -95,6 +97,7 @@ const bookControllers = {
 
     // update an existing flight
     updateBook: async (req, res) => {
+  
         try {
             const { id } = req.params;
             const { name, year, author, price, description, image_url } = req.body;
@@ -106,14 +109,17 @@ const bookControllers = {
     
             const sqlQuery = `UPDATE books SET name=?, year=?, author=?, price=?, description=?, image_url=? WHERE id=?`;
             const params = [name, year, author, parseFloat(price), description, image_url, id];
+            
             const result = await query(sqlQuery, params);
     
             if (result.affectedRows === 0) {
+                console.log('No rows affected, book not found');
                 return res.status(404).send('Book not found');
             }
+            
     
             // Reindirizza alla pagina dei dettagli del libro aggiornato
-            res.redirect(`/books/${id}`);
+            res.status(200).redirect(`/books/books`);
         } catch (error) {
             console.error(error);
             res.status(500).send('Internal Server Error');

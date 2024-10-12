@@ -1,4 +1,7 @@
-<form action="/books/<%= book.id %>?_method=PUT" method="POST" class="update-book-form">
+<!-- <form action="/books/<%= book.id %>" method="POST" class="update-book-form"> -->
+    <form action="/books/update-book/<%= book.id %>?_method=PUT" method="POST">
+
+
     <div class="form-group">
         <label for="name">Book Name</label>
         <input 
@@ -83,6 +86,6 @@
 </form>
 
 <button class="retour-button mt-4">
-    <a href="/books" class="text-blue-600 hover:underline">Back to Books List</a>
+    <a href="/books/books" class="text-blue-600 hover:underline">Back to Books List</a>
 </button>
 
