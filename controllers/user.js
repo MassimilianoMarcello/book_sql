@@ -66,7 +66,7 @@ const userControllers = {
             const result = await query(sqlQuery, [email, password]);
     
             // Respond wuth the query result
-            res.status(201).send('User added successfully');
+            res.status(200).redirect('/user/get'); 
         } catch (error) {
             console.error(error); 
             res.status(500).send('Internal Server Error'); 
