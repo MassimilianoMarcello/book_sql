@@ -1,0 +1,51 @@
+// sass/styles.scss
+// Import component styles
+@import 'components/buttons';
+@import 'components/forms';
+@import 'components/cards';
+
+// Import variables to use throughout the stylesheet
+@import 'variables';
+
+// Global styles
+body {
+    font-family: $font-stack; // Set the font for the entire body
+    color: $text-color;       // Set the default text color
+    background-color: $background-color; // Set the background color for the body
+    margin: 0;                // Remove default margin
+    padding: 0;               // Remove default padding
+}
+
+// Headings
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;                // Remove default margin
+    color: $primary-color;    // Set heading color to primary color
+}
+
+// Links
+a {
+    color: $primary-color;     // Set link color to primary color
+    text-decoration: none;      // Remove underline from links
+
+    &:hover {
+        color: $accent-color;  // Change color on hover to accent color
+        text-decoration: underline; // Add underline on hover for better UX
+    }
+}
+
+// Buttons
+.btn {
+    padding: $base-padding; // Use base padding for button size
+    margin: $base-margin;   // Use base margin for spacing around buttons
+    background-color: $primary-color; // Set button background to primary color
+    color: #fff;           // Set button text color to white
+    border: none;          // Remove default border
+    border-radius: $border-radius; // Apply border radius for rounded corners
+    cursor: pointer;       // Change cursor to pointer on hover
+    transition: background-color 0.3s; // Smooth transition for background color changes
+
+    // Change background color on hover
+    &:hover {
+        background-color: $secondary-color; // Change to secondary color on hover
+    }
+}

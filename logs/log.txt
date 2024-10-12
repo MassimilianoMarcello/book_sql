@@ -1,0 +1,13 @@
+2024-10-12 02:06:43 ------ GET ----- /api/products
+2024-10-12 02:06:43 ------ GET ----- /favicon.ico
+2024-10-12 02:07:35 ------ GET ----- /user/login
+2024-10-12 02:07:42 ------ GET ----- /user/register
+2024-10-12 02:08:28 ------ GET ----- /user/register
+2024-10-12 02:18:57 ------ GET ----- /css/style/style.css
+2024-10-12 02:19:10 ------ GET ----- /css/style/style.css
+2024-10-12 02:19:10 ------ GET ----- /css/style/style.css
+2024-10-12 02:19:10 ------ GET ----- /css/style/style.css
+2024-10-12 02:19:11 ------ GET ----- /css/style/style.css
+2024-10-12 02:19:22 ------ GET ----- /styles/styles.css
+2024-10-12 02:19:38 ------ GET ----- /styles/styles.css
+2024-10-12 02:19:39 ------ GET ----- /styles/styles.css

@@ -1,0 +1,18 @@
+.card {
+  background-color: #fff;
+  border: 1px solid #333;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  margin: 16px;
+}
+.card h2 {
+  margin-top: 0;
+  color: #3B82F6;
+}
+.card p {
+  margin-bottom: 0;
+  color: #333;
+}
+
+/*# sourceMappingURL=cards.css.map */

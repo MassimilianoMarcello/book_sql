@@ -5,11 +5,21 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 
+
+
+
+
+// import  createtable
+
+import createUserTable from './models/user.js';
+// import createFlightsTable from './models/flight.js';
+
 // import middlewares
 import logger from './middleware/logger.js';
 
 // import routes
-
+// import flightsRoutes from './routes/flight.js';
+import userRoutes from './routes/user.js';
 // load environment variables
 dotenv.config();
 const PORT = process.env.PORT || 5003;
@@ -26,6 +36,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+// create table
+createUserTable()
+// createFlightsTable()
+
+// use routes
+app.use('/user',userRoutes)
+// app.use('/flight',flightsRoutes)
+
 // serve static files
 app.use(express.static(path.join(PATH, 'public')));
 
@@ -36,7 +54,6 @@ app.set('views', path.join(PATH, 'views'));
 // use middlewares
 app.use(logger);
 
-// use routes
 
 // handle 404
 app.use('*', (req, res) => {

@@ -1,0 +1,48 @@
+<form action="/user/register" method="POST" class="register-form">
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            required 
+            class="input-field"
+            placeholder="Enter your email" 
+        >
+    </div>
+    
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            required 
+            class="input-field"
+            placeholder="Enter your password" 
+        >
+    </div>
+    
+    <div class="form-group">
+        <label for="confirm-password">Confirm Password</label>
+        <input 
+            type="password" 
+            id="confirm-password" 
+            name="confirm-password" 
+            required 
+            class="input-field"
+            placeholder="Confirm your password" 
+        >
+    </div>
+
+    <button 
+        type="submit" 
+        class="submit-button"
+    >
+        Register
+    </button>
+</form>
+
+<button class="retour-button mt-4">
+    <a href="/api/goals_list" class="text-blue-600 hover:underline">Home page</a>
+</button>

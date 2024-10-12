@@ -1,0 +1,26 @@
+// sass/components/cards.scss
+
+// Import the variables file to use variables for styles
+@import '../variables';
+
+// Basic card styling
+.card {
+    background-color: #fff;               // Set the background color to white
+    border: 1px solid $text-color;        // Set a solid border with text color
+    border-radius: $border-radius;        // Use border radius for rounded corners
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); // Apply subtle shadow for depth
+    padding: $base-padding;               // Use base padding for internal spacing
+    margin: $base-margin;                 // Use base margin for spacing around cards
+
+    // Card title styling
+    h2 {
+        margin-top: 0;                   // Remove margin above the title
+        color: $primary-color;            // Set title color to primary color
+    }
+
+    // Card content paragraph styling
+    p {
+        margin-bottom: 0;                 // Remove margin below paragraphs
+        color: $text-color;                // Set paragraph text color to text color
+    }
+}
