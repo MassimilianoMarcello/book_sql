@@ -102,3 +102,7 @@
 2024-10-12 19:01:09 ------ PUT ----- /update-book/1%0A
 2024-10-12 19:04:21 ------ PUT ----- /update-book/1?_method=PUT
 2024-10-12 19:05:37 ------ GET ----- /books
+2024-10-12 19:16:34 ------ DELETE ----- /delete-book/1?_method=DELETE
+2024-10-12 19:17:11 ------ GET ----- /books/books/books/add
+2024-10-12 19:17:32 ------ GET ----- /books/books/books/add
+2024-10-12 19:17:35 ------ GET ----- /books/add

@@ -16,9 +16,13 @@
         <p><strong>Description:</strong> <%= book.description ? book.description : 'No description available' %></p>
     </div>
 
-    <a href="/books" class="back-to-list">Back to Books List</a>
+    <a href="/books/books" class="back-to-list">Back to Books List</a>
     <a href="/books/update-book/<%= book.id %>" class="update-book-button">
         Update Book
     </a>
+    <form action="/books/delete-book/<%= book.id %>?_method=DELETE" method="POST" style="display:inline;">
+        <button type="submit" class="delete-book-button" onclick="return confirm('Are you sure you want to delete this book?');">
+            Delete Book
+        </button>
 </div>
 

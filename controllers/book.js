@@ -64,7 +64,7 @@ const bookControllers = {
             const params = [name, parseInt(year), author, parseFloat(price), image_url || null, description]; // Assicurati di includere description
             const result = await query(sqlQuery, params);
     
-            res.status(201).send('Book added successfully');
+            res.status(201).redirect(`/books/books`);
         } catch (error) {
             console.error(error);
             res.status(500).send('Internal Server Error');
@@ -132,15 +132,15 @@ const bookControllers = {
     remove: async (req, res) => {
         try {
             const { id } = req.params;
-            const strQuery = `DELETE FROM flights WHERE id=?`;
+            const strQuery = `DELETE FROM books WHERE id=?`;
             const params = [id];
             const result = await query(strQuery, params);
 
             if (result.affectedRows === 0) {
-                return res.status(404).send('Flight not found');
+                return res.status(404).send('Book not found');
             }
 
-            res.status(200).send('Flight deleted successfully');
+            res.status(200).redirect(`/books/books`);
         } catch (error) {
             console.error(error);
             res.status(500).send('Internal Server Error');
