@@ -13,6 +13,7 @@ import cookieParser from 'cookie-parser';
 
 import createUserTable from './models/user.js';
 import createBooksTable from './models/book.js';
+import createCartTable from './models/cart.js';
 
 // import middlewares
 import logger from './middleware/logger.js';
@@ -21,6 +22,7 @@ import logger from './middleware/logger.js';
 // import flightsRoutes from './routes/flight.js';
 import userRoutes from './routes/user.js';
 import bookRoutes from './routes/book.js';
+import cartRoutes from './routes/cart.js';
 // load environment variables
 dotenv.config();
 const PORT = process.env.PORT || 5003;
@@ -41,10 +43,12 @@ app.use(cookieParser());
 // create table
 createUserTable()
 createBooksTable()
+createCartTable()
 
 // use routes
 app.use('/user',userRoutes)
 app.use('/books',bookRoutes)
+app.use('/cart',cartRoutes)
 
 // serve static files
 app.use(express.static(path.join(PATH, 'public')));

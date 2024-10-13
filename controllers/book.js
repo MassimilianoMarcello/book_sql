@@ -20,27 +20,33 @@ const bookControllers = {
     },
 
     // Get a book from ID
-    getOne: async (req, res) => {
-        try {
-            const { id } = req.params;
-            const strQuery = `SELECT * FROM books WHERE id=?`;
-            const params = [id];
-            const result = await query(strQuery, params);
-            const book = result[0]
-            if (book.length === 0) {
-                return res.status(404).send('Book not found');
-            }
-            res.status(200).render('layout', {
-                title: 'Select one of our amazing  Books',
-                body: 'includes/book/bookDetails',
-               book
-                // token
-            });
-        } catch (err) {
-            console.error(err);
-            res.status(500).send('Internal Server Error');
+    // Get a book from ID
+getOne: async (req, res) => {
+    try {
+        const { id } = req.params;
+        const strQuery = `SELECT * FROM books WHERE id=?`;
+        const params = [id];
+        const result = await query(strQuery, params);
+        const book = result[0];
+        if (!book) {
+            return res.status(404).send('Book not found');
         }
-    },
+
+        // Passa l'ID dell'utente qui, se disponibile
+        const userId = req.cookies.userId; // Assicurati di avere l'ID dell'utente salvato nei cookie
+
+        res.status(200).render('layout', {
+            title: 'Select one of our amazing Books',
+            body: 'includes/book/bookDetails',
+            book,
+            userId // Aggiungi l'ID dell'utente qui
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+},
+
     // add book form
     addBookForm: (req, res) => {
         // const token = req.cookies.token;
