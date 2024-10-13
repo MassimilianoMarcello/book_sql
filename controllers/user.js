@@ -83,9 +83,10 @@ const userControllers = {
         // Verifica se l'email esiste nel database
         const sqlStr = 'SELECT * FROM users WHERE email = ?';
         const params = [email];
+        
         try {
             const result = await query(sqlStr, params);
-
+    
             // Se non troviamo l'utente, restituiamo un errore
             if (result.length === 0) {
                 return res.status(400).render('login', {
@@ -93,20 +94,20 @@ const userControllers = {
                     message: 'Invalid email or password'
                 });
             }
-
+    
             // Recupera i dati dell'utente
             const user = result[0];
-
+    
             // Confronta la password inserita con quella hashata nel database
             const isMatch = await bcrypt.compare(password, user.password);
-
+    
             if (!isMatch) {
                 return res.status(400).render('404', {
                     title: 'Login',
                     message: 'Invalid email or password'
                 });
             }
-
+    
             // Crea un token JWT per l'utente
             const token = jwt.sign(
                 { id: user.id, email: user.email },
@@ -115,10 +116,17 @@ const userControllers = {
                     expiresIn: '1h' // Il token scadrà dopo 1 ora
                 }
             );
-
+    
             // Imposta il token come cookie (puoi anche inviarlo come header se preferisci)
             res.cookie('token', token, { httpOnly: true });
-
+    
+            // Imposta l'ID dell'utente come cookie
+            res.cookie('userId', user.id, {
+                httpOnly: true, // Non accessibile tramite JavaScript
+                secure: process.env.NODE_ENV === 'production', // True in produzione
+                maxAge: 24 * 60 * 60 * 1000 // Durata del cookie: 1 giorno
+            });
+    
             // Reindirizza l'utente alla home o a una dashboard
             return res.status(200).redirect('/books/books');
         } catch (error) {
@@ -126,9 +134,8 @@ const userControllers = {
             return res.status(500).render('500', {
                 title: 'Server Error',
                 message: 'Something went wrong. Please try again later.'
-            });
-        }
-    },
+            });}},
+        
     logoutUser: async (req, res) => {
         res.clearCookie('token');
 
