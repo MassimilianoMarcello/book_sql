@@ -6,12 +6,12 @@ const bookControllers = {
         try {
             const strQuery = `SELECT * FROM books`;
             const books = await query(strQuery);
-          // const token = req.cookies.token;
+          const token = req.cookies.token;
         res.status(200).render('layout', {
             title: 'Select one of our amazing  Books',
             body: 'includes/book/bookList',
-           books
-            // token
+           books,
+            token
         });
         } catch (err) {
             console.error(err);
@@ -23,6 +23,7 @@ const bookControllers = {
     // Get a book from ID
 getOne: async (req, res) => {
     try {
+        const token = req.cookies.token;
         const { id } = req.params;
         const strQuery = `SELECT * FROM books WHERE id=?`;
         const params = [id];
@@ -39,6 +40,7 @@ getOne: async (req, res) => {
             title: 'Select one of our amazing Books',
             body: 'includes/book/bookDetails',
             book,
+            token,
             userId // Aggiungi l'ID dell'utente qui
         });
     } catch (err) {
@@ -49,11 +51,11 @@ getOne: async (req, res) => {
 
     // add book form
     addBookForm: (req, res) => {
-        // const token = req.cookies.token;
+        const token = req.cookies.token;
         res.status(200).render('layout', {
             title: 'Add a new Book',
             body: 'includes/book/addBookForm',
-            // token
+            token
         });
     },
     // Add a book
@@ -79,6 +81,7 @@ getOne: async (req, res) => {
     
     // add book form
     updateBookForm: async (req, res) => {
+        const token = req.cookies.token;
         try {
             const { id } = req.params;
             const strQuery = `SELECT * FROM books WHERE id = ?`;
@@ -92,6 +95,7 @@ getOne: async (req, res) => {
             res.status(200).render('layout', {
                 title: 'Update Book',
                 body: 'includes/book/updateBookForm',
+                token,
                 book: book[0]  // Passa il singolo libro alla vista
             });
         } catch (err) {
@@ -103,7 +107,7 @@ getOne: async (req, res) => {
 
     // update an existing flight
     updateBook: async (req, res) => {
-  
+      
         try {
             const { id } = req.params;
             const { name, year, author, price, description, image_url } = req.body;

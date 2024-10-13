@@ -129,6 +129,11 @@ const userControllers = {
             });
         }
     },
+    logoutUser: async (req, res) => {
+        res.clearCookie('token');
+
+        res.status(302).redirect('/user/login');
+    },
 
     getAll: async (req, res) => {
         try {
