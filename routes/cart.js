@@ -9,7 +9,7 @@ const { addToCart, removeFromCart, updateQuantity,getCartPage } = cartController
 router.post('/add', addToCart); // Aggiungi un libro al carrello
 
 router.delete('/remove/:id', removeFromCart); // Rimuovi un libro dal carrello
-router.put('/update-quantity/:id', updateQuantity); // Aggiorna la quantità di un libro nel carrello
+router.put('/update-quantity/:id', updateQuantity); 
 router.get('/', getCartPage);
 export default router;
 

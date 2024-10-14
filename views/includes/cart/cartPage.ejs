@@ -21,7 +21,7 @@
                     <td><%= item.name %></td>
                     <td>$<%= itemPrice.toFixed(2) %></td>
                     <td>      
-                        <form action="/cart/update-quantity/<%= item.id %>" method="POST">
+                        <form action="/cart/update-quantity/<%= item.id %>?_method=PUT" method="POST">
                         <input type="number" name="quantity" value="<%= item.quantity %>" min="1" required>
                         <button type="submit">Update</button>
                     </form>

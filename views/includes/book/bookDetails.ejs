@@ -28,7 +28,7 @@
         <form action="/cart/add" method="POST">
             <input type="hidden" name="userId" value="<%= userId %>"> <!-- ID dell'utente -->
             <input type="hidden" name="bookId" value="<%= book.id %>"> <!-- ID del libro -->
-            <input type="number" name="quantity" value="1" min="1"> <!-- Quantità -->
+            <input type="number" name="quantity" value="1" min="1"> 
             <button type="submit">Add to Cart</button>
         </form>
         <a href="/cart">View Cart</a> <!-- Aggiungi questo link -->

@@ -102,24 +102,39 @@ const cartControllers = {
 
     // Aggiorna la quantità di un libro nel carrello
     updateQuantity: async (req, res) => {
+        console.log('Update quantity controller hit'); // Verifica se il controller è chiamato
+        const { id } = req.params; // ID del prodotto nel carrello
+        const { quantity } = req.body; // Quantità dal form
+        console.log('Updating quantity for item ID:', id);
+        console.log('New quantity:', quantity); // Questo dovrebbe mostrare il valore della quantità
+    
         try {
-            const { id } = req.params; // id del carrello
-            const { quantity } = req.body;
-
-            const strQuery = `UPDATE cart SET quantity = ? WHERE id = ?`;
-            const params = [quantity, id];
-            const result = await query(strQuery, params);
-
-            if (result.affectedRows === 0) {
-                return res.status(404).send('Cart item not found');
+            const parsedQuantity = parseInt(quantity, 10);
+            if (isNaN(parsedQuantity) || parsedQuantity < 1) {
+                console.log('Invalid quantity:', quantity); // Log di errore
+                return res.status(400).send('Invalid quantity');
             }
-
-            res.status(200).redirect('/cart');
+    
+            // Aggiorna la quantità nel database
+            const sqlQuery = 'UPDATE cart SET quantity = ? WHERE id = ?';
+            const params = [parsedQuantity, id];
+            console.log('Executing query:', sqlQuery, 'Params:', params); // Log della query
+            const result = await query(sqlQuery, params);
+    
+            if (result.affectedRows > 0) {
+                console.log('Quantity updated successfully'); // Log di successo
+                return res.status(200).redirect('/cart');
+            } else {
+                console.log('Item not found in cart'); // Log di errore
+                return res.status(404).send('Item not found in cart');
+            }
         } catch (error) {
-            console.error(error);
-            res.status(500).send('Internal Server Error');
+            console.error('Error updating cart quantity:', error);
+            return res.status(500).send('Internal Server Error');
         }
-    }
+    },
+    
+    
 };
 
 export default cartControllers;
