@@ -1,4 +1,3 @@
-<!-- views/includes/cart/cartPage.ejs -->
 <h1>Your Shopping Cart</h1>
 
 <% if (cartItems.length > 0) { %>
@@ -8,15 +7,21 @@
                 <th>Book Name</th>
                 <th>Price</th>
                 <th>Quantity</th>
+                <th>Total</th> <!-- Aggiungi una colonna per il totale -->
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
+            <% let grandTotal = 0; %> <!-- Inizializza il totale complessivo -->
             <% cartItems.forEach(item => { %>
+                <% const itemPrice = (typeof item.price === 'number' ? item.price : parseFloat(item.price)); %>
+                <% const itemTotal = (itemPrice * item.quantity).toFixed(2); %> <!-- Calcola il totale per l'articolo -->
+                <% grandTotal += parseFloat(itemTotal); %> <!-- Aggiorna il totale complessivo -->
                 <tr>
                     <td><%= item.name %></td>
-                    <td>$<%= (typeof item.price === 'number' ? item.price : parseFloat(item.price)).toFixed(2) %></td>
+                    <td>$<%= itemPrice.toFixed(2) %></td>
                     <td><%= item.quantity %></td>
+                    <td>$<%= itemTotal %></td> <!-- Mostra il totale per l'articolo -->
                     <td>
                         <form action="/remove-from-cart/<%= item.id %>" method="POST">
                             <button type="submit">Remove</button>
@@ -26,8 +31,10 @@
             <% }) %>
         </tbody>
     </table>
+    <h2>Grand Total: $<%= grandTotal.toFixed(2) %></h2> <!-- Mostra il totale complessivo -->
 <% } else { %>
     <p>Your cart is empty.</p>
 <% } %>
+
 
 
