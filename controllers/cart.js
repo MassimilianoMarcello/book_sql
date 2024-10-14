@@ -6,14 +6,15 @@ const cartControllers = {
         try {
             const userId = req.cookies.userId; // Assicurati di avere l'ID dell'utente
             const bookId = req.body.bookId; // Assicurati che bookId venga passato correttamente
-            const quantity = 1; // O il valore che desideri
+            const quantity = parseInt(req.body.quantity, 10); // Ottieni la quantità dal body e converti in numero
     
             // Aggiungi il logging per il debug
             console.log('User ID:', userId);
             console.log('Book ID:', bookId);
+            console.log('Quantity:', quantity); // Aggiungi un log per la quantità
     
-            if (!userId || !bookId) {
-                return res.status(400).send('User ID and Book ID are required');
+            if (!userId || !bookId || isNaN(quantity) || quantity < 1) {
+                return res.status(400).send('User ID, Book ID and valid Quantity are required');
             }
     
             // Recupera il prezzo del libro
@@ -47,6 +48,7 @@ const cartControllers = {
             res.status(500).send('Internal Server Error');
         }
     },
+    
     
     
     
