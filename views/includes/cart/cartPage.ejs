@@ -23,7 +23,7 @@
                     <td><%= item.quantity %></td>
                     <td>$<%= itemTotal %></td> 
                     <td>
-                        <form action="/remove-from-cart/<%= item.id %>" method="POST">
+                        <form action="/cart/remove/<%= item.id %>?_method=DELETE" method="POST">
                             <button type="submit">Remove</button>
                         </form>
                     </td>
@@ -35,6 +35,8 @@
 <% } else { %>
     <p>Your cart is empty.</p>
 <% } %>
+<a href="/books/books" class="continue-shopping">Continue Shopping</a>
+<a href="/" class="checkout-button">Proceed to Checkout</a>
 
 
 

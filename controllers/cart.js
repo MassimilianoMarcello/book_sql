@@ -92,8 +92,8 @@ const cartControllers = {
             if (result.affectedRows === 0) {
                 return res.status(404).send('Cart item not found');
             }
-
-            res.status(200).send('Book removed from cart successfully');
+            res.status(200).redirect('/cart');
+           
         } catch (error) {
             console.error(error);
             res.status(500).send('Internal Server Error');

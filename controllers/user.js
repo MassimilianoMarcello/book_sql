@@ -173,10 +173,23 @@ const userControllers = {
 
     update: async (req, res) => {
         try {
-            const { id } = req.params;
-            const sqlQuery = `Update users set email=? ,password=? where id=?`;
-            const params = ['stupidmail@gmail.com', '1qa2ws3ed4rf5tg', id];
-            const result = await query(sqlQuery, params);
+            const { id } = req.params; // Ottieni l'ID dell'utente dall'URL
+            const { email, password } = req.body; // Estrai email e password dal corpo della richiesta
+    
+            // Verifica se la password è stata fornita e hashala
+            let hashedPassword;
+            if (password) {
+                hashedPassword = await hashPassword(password); // Assicurati di importare la tua funzione hashPassword
+            }
+    
+            // Costruisci la query dinamicamente
+            const sqlQuery = `UPDATE users SET email = ?${password ? ', password = ?' : ''} WHERE id = ?`;
+            const params = [email];
+            if (hashedPassword) params.push(hashedPassword); // Aggiungi la password hashata se presente
+            params.push(id); // Aggiungi l'ID dell'utente
+    
+            const result = await query(sqlQuery, params); // Esegui la query
+    
             console.log(result);
             res.status(200).send('User updated successfully');
         } catch (error) {
@@ -184,6 +197,7 @@ const userControllers = {
             res.status(500).send('Internal Server Error');
         }
     },
+    
     remove: async (req, res) => {
         try {
             const { id } = req.params; // Ottieni l'ID dell'utente dall'URL
