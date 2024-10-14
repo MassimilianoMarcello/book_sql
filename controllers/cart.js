@@ -16,6 +16,16 @@ const cartControllers = {
                 return res.status(400).send('User ID and Book ID are required');
             }
     
+            // Recupera il prezzo del libro
+            const getBookQuery = 'SELECT price FROM books WHERE id = ?';
+            const bookResult = await query(getBookQuery, [bookId]);
+    
+            if (bookResult.length === 0) {
+                return res.status(404).send('Book not found');
+            }
+    
+            const price = bookResult[0].price;
+    
             // Controlla se l'elemento è già nel carrello
             const strQuery = `SELECT * FROM cart WHERE user_id = ? AND book_id = ?`;
             const params = [userId, bookId];
@@ -26,9 +36,9 @@ const cartControllers = {
                 const updateQuery = `UPDATE cart SET quantity = quantity + ? WHERE user_id = ? AND book_id = ?`;
                 await query(updateQuery, [quantity, userId, bookId]);
             } else {
-                // Aggiungi un nuovo elemento al carrello
-                const insertQuery = `INSERT INTO cart (user_id, book_id, quantity) VALUES (?, ?, ?)`;
-                await query(insertQuery, [userId, bookId, quantity]);
+                // Aggiungi un nuovo elemento al carrello con il prezzo
+                const insertQuery = `INSERT INTO cart (user_id, book_id, quantity, price) VALUES (?, ?, ?, ?)`;
+                await query(insertQuery, [userId, bookId, quantity, price]);
             }
     
             res.status(201).send('Book added to cart');
@@ -39,33 +49,36 @@ const cartControllers = {
     },
     
     
+    
 
     getCartPage: async (req, res) => {
         try {
             const userId = req.cookies.userId; // Ottieni l'ID dell'utente dai cookie
-            const strQuery = `SELECT * FROM cart WHERE userId = ?`;
+            const strQuery = `SELECT * FROM cart WHERE user_id = ?`; // Cambia userId in user_id
             const params = [userId];
             const cartItems = await query(strQuery, params);
+            const token = req.cookies.token;
     
-            // Puoi anche ottenere i dettagli dei libri unendo la tabella dei libri
-            // Esempio di query con join (opzionale)
+            // Query per ottenere i dettagli dei libri
             const bookDetailsQuery = `
                 SELECT c.*, b.name, b.price 
                 FROM cart c
-                JOIN books b ON c.bookId = b.id
-                WHERE c.userId = ?`;
+                JOIN books b ON c.book_id = b.id 
+                WHERE c.user_id = ?`; // Cambia userId in user_id
             const bookDetails = await query(bookDetailsQuery, params);
     
             res.status(200).render('layout', {
                 title: 'Your Shopping Cart',
                 body: 'includes/cart/cartPage', // Assicurati di avere una vista per la pagina del carrello
-                cartItems: bookDetails, // Passa i dettagli del carrello alla vista
+                token,
+                cartItems: bookDetails, 
             });
         } catch (error) {
             console.error(error);
             res.status(500).send('Internal Server Error');
         }
     },
+    
     
 
     // Rimuovi un libro dal carrello

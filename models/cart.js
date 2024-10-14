@@ -9,6 +9,7 @@ const createCartTable = async () => {
                 user_id INT NOT NULL,
                 book_id INT NOT NULL,
                 quantity INT NOT NULL DEFAULT 1,
+                price DECIMAL(10, 2) NOT NULL,  
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
                 FOREIGN KEY (book_id) REFERENCES books(id) ON DELETE CASCADE
@@ -23,3 +24,4 @@ const createCartTable = async () => {
 };
 
 export default createCartTable;
+

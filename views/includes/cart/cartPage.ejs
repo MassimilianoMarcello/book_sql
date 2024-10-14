@@ -1,20 +1,33 @@
-<div class="cart-page">
-    <h1>Your Shopping Cart</h1>
-    <% if (cartItems.length > 0) { %>
-        <ul>
+<!-- views/includes/cart/cartPage.ejs -->
+<h1>Your Shopping Cart</h1>
+
+<% if (cartItems.length > 0) { %>
+    <table>
+        <thead>
+            <tr>
+                <th>Book Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
             <% cartItems.forEach(item => { %>
-                <li>
-                    <strong><%= item.name %></strong> - $<%= item.price %> (Quantity: <%= item.quantity %>)
-                    <form action="/cart/remove/<%= item.id %>" method="POST" style="display:inline;">
-                        <button type="submit" onclick="return confirm('Are you sure you want to remove this item?');">Remove</button>
-                    </form>
-                </li>
-            <% }); %>
-        </ul>
-    <% } else { %>
-        <p>Your cart is empty.</p>
-    <% } %>
-    <a href="/books/books">Continue Shopping</a>
-</div>
+                <tr>
+                    <td><%= item.name %></td>
+                    <td>$<%= (typeof item.price === 'number' ? item.price : parseFloat(item.price)).toFixed(2) %></td>
+                    <td><%= item.quantity %></td>
+                    <td>
+                        <form action="/remove-from-cart/<%= item.id %>" method="POST">
+                            <button type="submit">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+<% } else { %>
+    <p>Your cart is empty.</p>
+<% } %>
 
 

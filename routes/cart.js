@@ -3,7 +3,7 @@ import cartControllers from '../controllers/cart.js';
 
 const router = express.Router();
 
-const { addToCart, getCart, removeFromCart, updateQuantity,getCartPage } = cartControllers;
+const { addToCart, removeFromCart, updateQuantity,getCartPage } = cartControllers;
 
 // Rotte del carrello
 router.post('/add', addToCart); // Aggiungi un libro al carrello
