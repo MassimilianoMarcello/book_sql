@@ -143,12 +143,14 @@ const userControllers = {
     },
 
     getAll: async (req, res) => {
+        const token = req.cookies.token;
         try {
             const strQuery = `SELECT * FROM users`;
             const result = await query(strQuery);
             res.status(200).render('layout', {
                 title: 'My goals',
                 body: 'includes/user/allUsers',
+                token,
                 users: result
             });
         } catch (err) {

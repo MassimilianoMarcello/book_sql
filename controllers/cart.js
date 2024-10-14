@@ -41,7 +41,7 @@ const cartControllers = {
                 await query(insertQuery, [userId, bookId, quantity, price]);
             }
     
-            res.status(201).send('Book added to cart');
+            res.status(201).redirect('/cart');
         } catch (error) {
             console.error('Error adding to cart:', error); // Aggiungi un messaggio di errore
             res.status(500).send('Internal Server Error');
