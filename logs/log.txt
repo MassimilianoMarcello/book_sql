@@ -214,3 +214,10 @@
 2024-10-14 02:48:56 ------ POST ----- /cart/1
 2024-10-14 02:49:19 ------ POST ----- /remove/1
 2024-10-14 02:49:34 ------ POST ----- /cart/remove/1
+2024-10-14 02:57:02 ------ POST ----- /update-quantity/2
+2024-10-14 02:59:01 ------ POST ----- /cart/update-quantity/2
+2024-10-14 03:02:53 ------ POST ----- /cart/update-quantity/2
+2024-10-14 03:03:03 ------ POST ----- /cart/update-quantity/2
+2024-10-14 03:04:02 ------ POST ----- /cart/update-quantity/2
+2024-10-14 03:04:10 ------ POST ----- /cart/update-quantity/2
+2024-10-14 03:07:01 ------ POST ----- /cart/update-quantity/3

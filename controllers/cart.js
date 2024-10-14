@@ -114,7 +114,7 @@ const cartControllers = {
                 return res.status(404).send('Cart item not found');
             }
 
-            res.status(200).send('Cart item updated successfully');
+            res.status(200).redirect('/cart');
         } catch (error) {
             console.error(error);
             res.status(500).send('Internal Server Error');
