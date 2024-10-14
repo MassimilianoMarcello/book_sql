@@ -9,26 +9,35 @@ import bcrypt from 'bcrypt';
 const userControllers = {
     getLoginForm: (req, res) => {
         const token = req.cookies.token;
+        const role = req.cookies.role; // Recupera il ruolo dai cookie
         res.status(200).render('layout', {
-            title: 'Enter email and password ',
+            title: 'Enter email and password',
             body: 'includes/user/loginForm',
-            token
+            token,
+            role
         });
     },
+    
     // Render registration form
     getRegistrationForm: (req, res) => {
         const token = req.cookies.token;
+        const role = req.cookies.role; // Recupera il ruolo dai cookie
         res.status(200).render('layout', {
-            title: 'Register with email and password ',
+            title: 'Register with email and password',
             body: 'includes/user/userRegistrationForm',
-            token
+            token,
+            role
         });
     },
-    // fill the registration form
+    
+    // Fill the registration form
     addUserRegistration: async (req, res) => {
-        const { email, password, repassword } = req.body;
+        const { email, password, repassword, isAdmin } = req.body; // Ricevi isAdmin
+        const adminRole = isAdmin ? true : false; // Imposta il ruolo come true se isAdmin è presente
+
         console.log('Password:', password);
         console.log('Repassword:', repassword);
+        console.log('Is Admin:', adminRole); // Debug
 
         try {
             const sqlCheckUser = 'SELECT * FROM users WHERE email = ?';
@@ -50,9 +59,10 @@ const userControllers = {
 
             if (isValidEmail && isValidPassword && samePassword) {
                 const hashedPassword = hashPassword(password);
-                const sqlInsertUser =
-                    'INSERT INTO users (email, password) VALUES (?, ?)';
-                const paramsInsertUser = [email, hashedPassword];
+                const role = adminRole ? 'administrator' : 'user'; // Determina il ruolo
+
+                const sqlInsertUser = 'INSERT INTO users (email, password, role) VALUES (?, ?, ?)';
+                const paramsInsertUser = [email, hashedPassword, role]; // Aggiungi il ruolo
                 const result = await query(sqlInsertUser, paramsInsertUser);
 
                 if (result.affectedRows > 0) {
@@ -77,6 +87,7 @@ const userControllers = {
             });
         }
     },
+
     loginUser: async (req, res) => {
         const { email, password } = req.body;
 
@@ -86,7 +97,7 @@ const userControllers = {
         
         try {
             const result = await query(sqlStr, params);
-    
+
             // Se non troviamo l'utente, restituiamo un errore
             if (result.length === 0) {
                 return res.status(400).render('login', {
@@ -94,39 +105,46 @@ const userControllers = {
                     message: 'Invalid email or password'
                 });
             }
-    
+
             // Recupera i dati dell'utente
             const user = result[0];
-    
+            const role = user.role; 
             // Confronta la password inserita con quella hashata nel database
             const isMatch = await bcrypt.compare(password, user.password);
-    
+
             if (!isMatch) {
                 return res.status(400).render('404', {
                     title: 'Login',
                     message: 'Invalid email or password'
                 });
             }
-    
+
             // Crea un token JWT per l'utente
             const token = jwt.sign(
-                { id: user.id, email: user.email },
+                { id: user.id, email: user.email, role: user.role }, // Aggiunto il ruolo qui
                 process.env.TOKEN_SECRET,
                 {
                     expiresIn: '1h' // Il token scadrà dopo 1 ora
                 }
             );
-    
-            // Imposta il token come cookie (puoi anche inviarlo come header se preferisci)
+
+            // Imposta il token come cookie
             res.cookie('token', token, { httpOnly: true });
-    
+
+            // Imposta il ruolo come cookie
+            res.cookie('role', user.role, {
+                httpOnly: true, // Non accessibile tramite JavaScript
+                secure: process.env.NODE_ENV === 'production', // True in produzione
+                maxAge: 24 * 60 * 60 * 1000 // Durata del cookie: 1 giorno
+            });
+            
             // Imposta l'ID dell'utente come cookie
             res.cookie('userId', user.id, {
                 httpOnly: true, // Non accessibile tramite JavaScript
                 secure: process.env.NODE_ENV === 'production', // True in produzione
                 maxAge: 24 * 60 * 60 * 1000 // Durata del cookie: 1 giorno
             });
-    
+
             // Reindirizza l'utente alla home o a una dashboard
             return res.status(200).redirect('/books/books');
         } catch (error) {
@@ -134,16 +152,19 @@ const userControllers = {
             return res.status(500).render('500', {
                 title: 'Server Error',
                 message: 'Something went wrong. Please try again later.'
-            });}},
-        
+            });
+        }
+    },
+
     logoutUser: async (req, res) => {
         res.clearCookie('token');
-
+        res.clearCookie('role'); // Pulisce anche il cookie del ruolo
         res.status(302).redirect('/user/login');
     },
 
     getAll: async (req, res) => {
         const token = req.cookies.token;
+        const role = req.cookies.role; // Recupera il ruolo dai cookie
         try {
             const strQuery = `SELECT * FROM users`;
             const result = await query(strQuery);
@@ -151,6 +172,7 @@ const userControllers = {
                 title: 'My goals',
                 body: 'includes/user/allUsers',
                 token,
+                role,
                 users: result
             });
         } catch (err) {
@@ -158,6 +180,7 @@ const userControllers = {
             res.status(500).send('internal server error');
         }
     },
+    
     getOne: async (req, res) => {
         try {
             const { id } = req.params;
@@ -175,21 +198,21 @@ const userControllers = {
         try {
             const { id } = req.params; // Ottieni l'ID dell'utente dall'URL
             const { email, password } = req.body; // Estrai email e password dal corpo della richiesta
-    
+
             // Verifica se la password è stata fornita e hashala
             let hashedPassword;
             if (password) {
                 hashedPassword = await hashPassword(password); // Assicurati di importare la tua funzione hashPassword
             }
-    
+
             // Costruisci la query dinamicamente
             const sqlQuery = `UPDATE users SET email = ?${password ? ', password = ?' : ''} WHERE id = ?`;
             const params = [email];
             if (hashedPassword) params.push(hashedPassword); // Aggiungi la password hashata se presente
             params.push(id); // Aggiungi l'ID dell'utente
-    
+
             const result = await query(sqlQuery, params); // Esegui la query
-    
+
             console.log(result);
             res.status(200).send('User updated successfully');
         } catch (error) {
@@ -197,7 +220,7 @@ const userControllers = {
             res.status(500).send('Internal Server Error');
         }
     },
-    
+
     remove: async (req, res) => {
         try {
             const { id } = req.params; // Ottieni l'ID dell'utente dall'URL
@@ -216,3 +239,4 @@ const userControllers = {
 };
 
 export default userControllers;
+

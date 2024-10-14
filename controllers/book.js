@@ -7,11 +7,13 @@ const bookControllers = {
             const strQuery = `SELECT * FROM books`;
             const books = await query(strQuery);
           const token = req.cookies.token;
+          const role = req.cookies.role;
         res.status(200).render('layout', {
             title: 'Select one of our amazing  Books',
             body: 'includes/book/bookList',
            books,
-            token
+            token,
+            role,
         });
         } catch (err) {
             console.error(err);
@@ -24,6 +26,7 @@ const bookControllers = {
 getOne: async (req, res) => {
     try {
         const token = req.cookies.token;
+        const role = req.cookies.role;
         const { id } = req.params;
         const strQuery = `SELECT * FROM books WHERE id=?`;
         const params = [id];
@@ -41,6 +44,7 @@ getOne: async (req, res) => {
             body: 'includes/book/bookDetails',
             book,
             token,
+            role,
             userId // Aggiungi l'ID dell'utente qui
         });
     } catch (err) {
@@ -52,10 +56,12 @@ getOne: async (req, res) => {
     // add book form
     addBookForm: (req, res) => {
         const token = req.cookies.token;
+        const role = req.cookies.role;
         res.status(200).render('layout', {
             title: 'Add a new Book',
             body: 'includes/book/addBookForm',
-            token
+            token,
+            role
         });
     },
     // Add a book
@@ -82,6 +88,7 @@ getOne: async (req, res) => {
     // add book form
     updateBookForm: async (req, res) => {
         const token = req.cookies.token;
+        const role = req.cookies.role;
         try {
             const { id } = req.params;
             const strQuery = `SELECT * FROM books WHERE id = ?`;
@@ -96,6 +103,7 @@ getOne: async (req, res) => {
                 title: 'Update Book',
                 body: 'includes/book/updateBookForm',
                 token,
+                role,
                 book: book[0]  // Passa il singolo libro alla vista
             });
         } catch (err) {

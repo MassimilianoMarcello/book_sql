@@ -60,7 +60,10 @@ const cartControllers = {
             const params = [userId];
             const cartItems = await query(strQuery, params);
             const token = req.cookies.token;
-    
+            const role = req.cookies.role;
+       // Aggiungi i log qui
+       console.log('Token:', req.cookies.token); // Log del token
+       console.log('Role:', req.user?.role); // Log del ruolo
             // Query per ottenere i dettagli dei libri
             const bookDetailsQuery = `
                 SELECT c.*, b.name, b.price 
@@ -73,6 +76,7 @@ const cartControllers = {
                 title: 'Your Shopping Cart',
                 body: 'includes/cart/cartPage', // Assicurati di avere una vista per la pagina del carrello
                 token,
+                role,
                 cartItems: bookDetails, 
             });
         } catch (error) {

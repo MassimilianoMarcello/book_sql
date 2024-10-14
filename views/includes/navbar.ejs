@@ -4,20 +4,21 @@
         <div class="auth-links">
             <% if(token){ %>
                 <a href="/user/logout">Logout</a>
-
-                <% } else { %>     
-            <a href="/user/login">Login</a>
-          
-            <a href="/user/register">Register</a>
-            <%} %>
+            <% } else { %>     
+                <a href="/user/login">Login</a>
+                <a href="/user/register">Register</a>
+            <% } %>
         </div>
     </div>
     <ul class="navbar-menu">
         <% if(token){ %>
-        <li><a href="/user/get">All Users</a></li>
-        <li><a href="/books/books">All Books</a></li>
-        <li><a href="/books/add-book">Add Book</a></li>
-        <li><a href="/cart">View Cart</a></li>
-        <%} %>
+            <li><a href="/books/books">All Books</a></li>
+            <li><a href="/cart">View Cart</a></li>
+            <% if(role === 'administrator'){ %> 
+                <li><a href="/user/get">All Users</a></li>
+                <li><a href="/books/add-book">Add Book</a></li>
+            <% } %>
+        <% } %>
     </ul>
 </nav>
+
