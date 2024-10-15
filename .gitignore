@@ -2,7 +2,7 @@
 node_modules/
 
 # Environment variables file
-# .env
+.env
 
 # IDE/editor specific files
 # .vscode/
@@ -12,7 +12,7 @@ node_modules/
 .DS_Store
 
 # Logs
-# logs/
+logs/
 *.log
 
 # Runtime data
