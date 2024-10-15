@@ -47,7 +47,7 @@
 
 @mixin card {
     background-color: #fff;  
-    max-width: 45%;              // Colore di sfondo bianco
+    // max-width: 45%;              // Colore di sfondo bianco
     border: 1px solid $border-color;       // Bordo solido con colore dal file variables
     border-radius: $border-radius;         // Angoli arrotondati
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); // Ombra leggera per profondità

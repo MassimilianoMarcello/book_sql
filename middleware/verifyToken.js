@@ -9,7 +9,7 @@ const verifyToken = (req, res, next) => {
         });
     }
     
-    // Verifica il token
+    // Verificy token
     jwt.verify(token, process.env.TOKEN_SECRET, (err, data) => {
         if (err) {
             return res.status(403).render('404', {
@@ -18,7 +18,7 @@ const verifyToken = (req, res, next) => {
             });
         }
         
-        // Salva i dati decodificati nel req.user
+        // Save data on req.user
         req.user = data; 
         next(); 
     });

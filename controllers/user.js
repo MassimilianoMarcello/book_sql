@@ -17,11 +17,11 @@ const userControllers = {
             role
         });
     },
-    
+
     // Render registration form
     getRegistrationForm: (req, res) => {
         const token = req.cookies.token;
-        const role = req.cookies.role; // Recupera il ruolo dai cookie
+        const role = req.cookies.role; // Taek the role of the cookie
         res.status(200).render('layout', {
             title: 'Register with email and password',
             body: 'includes/user/userRegistrationForm',
@@ -29,15 +29,15 @@ const userControllers = {
             role
         });
     },
-    
+
     // Fill the registration form
     addUserRegistration: async (req, res) => {
-        const { email, password, repassword, isAdmin } = req.body; // Ricevi isAdmin
-        const adminRole = isAdmin ? true : false; // Imposta il ruolo come true se isAdmin è presente
+        const { email, password, repassword, isAdmin } = req.body;
+        const adminRole = isAdmin ? true : false; // set admin true if present
 
         console.log('Password:', password);
         console.log('Repassword:', repassword);
-        console.log('Is Admin:', adminRole); // Debug
+        console.log('Is Admin:', adminRole);
 
         try {
             const sqlCheckUser = 'SELECT * FROM users WHERE email = ?';
@@ -48,21 +48,22 @@ const userControllers = {
                 return res.status(200).send('User already exists');
             }
 
-            // Valida email, password e corrispondenza password
+            // Validate email, password and repassword
             const isValidEmail = validateEmail(email);
             const isValidPassword = validatePassword(password);
             const samePassword = matchPassword(password, repassword);
-
-            console.log('isValidEmail:', isValidEmail); // Debug
-            console.log('isValidPassword:', isValidPassword); // Debug
-            console.log('samePassword:', samePassword); // Debug
+            // debug
+            console.log('isValidEmail:', isValidEmail);
+            console.log('isValidPassword:', isValidPassword);
+            console.log('samePassword:', samePassword);
 
             if (isValidEmail && isValidPassword && samePassword) {
                 const hashedPassword = hashPassword(password);
-                const role = adminRole ? 'administrator' : 'user'; // Determina il ruolo
+                const role = adminRole ? 'administrator' : 'user'; // determines the role
 
-                const sqlInsertUser = 'INSERT INTO users (email, password, role) VALUES (?, ?, ?)';
-                const paramsInsertUser = [email, hashedPassword, role]; // Aggiungi il ruolo
+                const sqlInsertUser =
+                    'INSERT INTO users (email, password, role) VALUES (?, ?, ?)';
+                const paramsInsertUser = [email, hashedPassword, role]; // add a role
                 const result = await query(sqlInsertUser, paramsInsertUser);
 
                 if (result.affectedRows > 0) {
@@ -91,14 +92,14 @@ const userControllers = {
     loginUser: async (req, res) => {
         const { email, password } = req.body;
 
-        // Verifica se l'email esiste nel database
+        // Verify if the email exist in the database
         const sqlStr = 'SELECT * FROM users WHERE email = ?';
         const params = [email];
-        
+
         try {
             const result = await query(sqlStr, params);
 
-            // Se non troviamo l'utente, restituiamo un errore
+           // If we don't find the user, we return an error
             if (result.length === 0) {
                 return res.status(400).render('login', {
                     title: 'Login',
@@ -106,10 +107,10 @@ const userControllers = {
                 });
             }
 
-            // Recupera i dati dell'utente
+           // Get the user data
             const user = result[0];
-            const role = user.role; 
-            // Confronta la password inserita con quella hashata nel database
+            const role = user.role;
+        // Compare the entered password with the hashed password in the database
             const isMatch = await bcrypt.compare(password, user.password);
 
             if (!isMatch) {
@@ -119,33 +120,33 @@ const userControllers = {
                 });
             }
 
-            // Crea un token JWT per l'utente
+            // Create  token JWT for user
             const token = jwt.sign(
-                { id: user.id, email: user.email, role: user.role }, // Aggiunto il ruolo qui
+                { id: user.id, email: user.email, role: user.role }, // Add roles here
                 process.env.TOKEN_SECRET,
                 {
-                    expiresIn: '1h' // Il token scadrà dopo 1 ora
+                    expiresIn: '1h' // token espires after 1 h
                 }
             );
 
-            // Imposta il token come cookie
+         // Set the token as a cookie
             res.cookie('token', token, { httpOnly: true });
 
-            // Imposta il ruolo come cookie
+            // set ruolo as a cookie
             res.cookie('role', user.role, {
-                httpOnly: true, // Non accessibile tramite JavaScript
-                secure: process.env.NODE_ENV === 'production', // True in produzione
-                maxAge: 24 * 60 * 60 * 1000 // Durata del cookie: 1 giorno
-            });
-            
-            // Imposta l'ID dell'utente come cookie
-            res.cookie('userId', user.id, {
-                httpOnly: true, // Non accessibile tramite JavaScript
-                secure: process.env.NODE_ENV === 'production', // True in produzione
-                maxAge: 24 * 60 * 60 * 1000 // Durata del cookie: 1 giorno
+                httpOnly: true, // not accesible with JavaScript
+                secure: process.env.NODE_ENV === 'production', // True in prodution
+                maxAge: 24 * 60 * 60 * 1000 // Cookie duration 1 day
             });
 
-            // Reindirizza l'utente alla home o a una dashboard
+            // set user'ID as a e cookie
+            res.cookie('userId', user.id, {
+                httpOnly: true, 
+                secure: process.env.NODE_ENV === 'production', 
+                maxAge: 24 * 60 * 60 * 1000 
+            });
+
+            
             return res.status(200).redirect('/books/books');
         } catch (error) {
             console.error('Login error:', error);
@@ -158,13 +159,14 @@ const userControllers = {
 
     logoutUser: async (req, res) => {
         res.clearCookie('token');
-        res.clearCookie('role'); // Pulisce anche il cookie del ruolo
+        res.clearCookie('role'); 
         res.status(302).redirect('/user/login');
     },
 
     getAll: async (req, res) => {
         const token = req.cookies.token;
-        const role = req.cookies.role; // Recupera il ruolo dai cookie
+        const role = req.cookies.role; 
+        // Retrieve the role from cookies
         try {
             const strQuery = `SELECT * FROM users`;
             const result = await query(strQuery);
@@ -180,7 +182,7 @@ const userControllers = {
             res.status(500).send('internal server error');
         }
     },
-    
+
     getOne: async (req, res) => {
         try {
             const { id } = req.params;
@@ -196,22 +198,22 @@ const userControllers = {
 
     update: async (req, res) => {
         try {
-            const { id } = req.params; // Ottieni l'ID dell'utente dall'URL
-            const { email, password } = req.body; // Estrai email e password dal corpo della richiesta
+            const { id } = req.params; // user id from URL
+            const { email, password } = req.body; 
 
-            // Verifica se la password è stata fornita e hashala
+            // verifica if there is a password and if is hashed
             let hashedPassword;
             if (password) {
-                hashedPassword = await hashPassword(password); // Assicurati di importare la tua funzione hashPassword
+                hashedPassword =  hashPassword(password); 
             }
 
             // Costruisci la query dinamicamente
             const sqlQuery = `UPDATE users SET email = ?${password ? ', password = ?' : ''} WHERE id = ?`;
             const params = [email];
-            if (hashedPassword) params.push(hashedPassword); // Aggiungi la password hashata se presente
-            params.push(id); // Aggiungi l'ID dell'utente
+            if (hashedPassword) params.push(hashedPassword); 
+            params.push(id); // add  user id if not present
 
-            const result = await query(sqlQuery, params); // Esegui la query
+            const result = await query(sqlQuery, params); 
 
             console.log(result);
             res.status(200).send('User updated successfully');
@@ -223,20 +225,19 @@ const userControllers = {
 
     remove: async (req, res) => {
         try {
-            const { id } = req.params; // Ottieni l'ID dell'utente dall'URL
-            const strQuery = `DELETE FROM users WHERE id=?`; // Query SQL per eliminare l'utente
-            const params = [id]; // Parametri per la query
-            const result = await query(strQuery, params); // Esegui la query
+            const { id } = req.params; 
+            const strQuery = `DELETE FROM users WHERE id=?`; // Query SQL to delete user
+            const params = [id]; // parameter for the query
+            const result = await query(strQuery, params); // run the query
 
-            // Redirect alla pagina della lista utenti dopo l'eliminazione
-            res.status(200).redirect('/user/get'); // Modifica il percorso in base alle tue necessità
-            console.log(result); // Log del risultato per il debug
+           
+            res.status(200).redirect('/user/get'); 
+            console.log(result); 
         } catch (error) {
-            console.error(error); // Log dell'errore
-            res.status(500).send('Internal Server Error'); // Risposta in caso di errore
+            console.error(error); 
+            res.status(500).send('Internal Server Error'); 
         }
     }
 };
 
 export default userControllers;
-

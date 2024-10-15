@@ -15,7 +15,7 @@ const createCartTable = async () => {
                 FOREIGN KEY (book_id) REFERENCES books(id) ON DELETE CASCADE
             )
         `;
-        // Assuming 'query' is your function to execute SQL queries
+      
         const result = await query(sql);
         console.log(result);  // Log the result of the table creation
     } catch (error) {

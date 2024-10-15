@@ -9,23 +9,24 @@
 
 
 
-// Contenitore per i libri in griglia
+//books container
 .book-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); // Layout a griglia responsive
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
     gap: .5rem; // Spazio tra le card
     padding: 2rem;
 }
 
-// Stile per le card dei libri
+// card single book
 .book-card {
     @include card; // Usa il mixin delle card
 
     .book-image {
         width: 100%;
-        height: auto;
-        max-height:14rem ;
-        max-width: 10rem;
+        height: 50%;
+        // max-height:14rem ;
+        // max-width: 15rem;
+        
         object-fit: cover; // Mantiene le proporzioni dell'immagine
         border-bottom: 1px solid $text-color;
     }

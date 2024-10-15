@@ -194,7 +194,6 @@
 
 .book-card {
   background-color: #fff;
-  max-width: 45%;
   border: 1px solid #D1D5DB;
   border-radius: 4px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -216,9 +215,7 @@
 }
 .book-card .book-image {
   width: 100%;
-  height: auto;
-  max-height: 14rem;
-  max-width: 10rem;
+  height: 50%;
   object-fit: cover;
   border-bottom: 1px solid #333;
 }

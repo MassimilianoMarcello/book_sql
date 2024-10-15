@@ -36,16 +36,15 @@ getOne: async (req, res) => {
             return res.status(404).send('Book not found');
         }
 
-        // Passa l'ID dell'utente qui, se disponibile
-        const userId = req.cookies.userId; // Assicurati di avere l'ID dell'utente salvato nei cookie
-
+        // Passing  the user  ID if available
+        const userId = req.cookies.userId; // Make sure you have the user ID saved in cookies
         res.status(200).render('layout', {
             title: 'Select one of our amazing Books',
             body: 'includes/book/bookDetails',
             book,
             token,
             role,
-            userId // Aggiungi l'ID dell'utente qui
+            userId // Add the use id here
         });
     } catch (err) {
         console.error(err);
@@ -75,7 +74,7 @@ getOne: async (req, res) => {
             }
     
             const sqlQuery = `INSERT INTO books (name, year, author, price, image_url, description) VALUES (?, ?, ?, ?, ?, ?)`;
-            const params = [name, parseInt(year), author, parseFloat(price), image_url || null, description]; // Assicurati di includere description
+            const params = [name, parseInt(year), author, parseFloat(price), image_url || null, description]; 
             const result = await query(sqlQuery, params);
     
             res.status(201).redirect(`/books/books`);
@@ -104,7 +103,7 @@ getOne: async (req, res) => {
                 body: 'includes/book/updateBookForm',
                 token,
                 role,
-                book: book[0]  // Passa il singolo libro alla vista
+                book: book[0]  // Pass the single book here
             });
         } catch (err) {
             console.error(err);
@@ -136,7 +135,7 @@ getOne: async (req, res) => {
             }
             
     
-            // Reindirizza alla pagina dei dettagli del libro aggiornato
+           
             res.status(200).redirect(`/books/books`);
         } catch (error) {
             console.error(error);
