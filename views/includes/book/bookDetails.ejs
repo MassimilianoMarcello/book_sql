@@ -11,20 +11,27 @@
     <% } else { %>
         <p>No image available</p>
     <% } %>
+    <% if(token){ %>
+        <div class="book-description">
+            <p><strong>Description:</strong> <%= book.description ? book.description : 'No description available' %></p>
+        </div>
+    
+        <a href="/books/books" class="back-to-list">Back to Books List</a>
 
-    <div class="book-description">
-        <p><strong>Description:</strong> <%= book.description ? book.description : 'No description available' %></p>
-    </div>
+        <% if(role === 'administrator'){ %> 
+            <a href="/books/update-book/<%= book.id %>" class="update-book-button">
+                Update Book
+            </a>
+            <form action="/books/delete-book/<%= book.id %>?_method=DELETE" method="POST" style="display:inline;">
+                <button type="submit" class="delete-book-button" onclick="return confirm('Are you sure you want to delete this book?');">
+                    Delete Book
+                </button>
+            </form>
+       
+        <% } %>
+    <% } %>
 
-    <a href="/books/books" class="back-to-list">Back to Books List</a>
-    <a href="/books/update-book/<%= book.id %>" class="update-book-button">
-        Update Book
-    </a>
-    <form action="/books/delete-book/<%= book.id %>?_method=DELETE" method="POST" style="display:inline;">
-        <button type="submit" class="delete-book-button" onclick="return confirm('Are you sure you want to delete this book?');">
-            Delete Book
-        </button>
-    </form>
+
         <form action="/cart/add" method="POST">
             <input type="hidden" name="userId" value="<%= userId %>"> <!-- ID dell'utente -->
             <input type="hidden" name="bookId" value="<%= book.id %>"> <!-- ID del libro -->
