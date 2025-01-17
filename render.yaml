@@ -1,15 +1,12 @@
 services:
-  - type: pserv
-    name: mysql
-    plan: standard
-    env: docker
-    autoDeploy: false
-    disk:
-      name: mysql
-      mountPath: /var/lib/mysql
-      sizeGB: 10
+  - type: mysql
+    name: mysql-database
+    plan: free
     envVars:
-      - fromGroup: mysql
+      MYSQL_DATABASE: massidatabase_test
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 1qasw23edfr45tg
+      MYSQL_ROOT_PASSWORD: 1qasw23edfr45tg
 
 envVarGroups:
   - name: mysql
@@ -19,7 +16,8 @@ envVarGroups:
       - key: MYSQL_USER
         value: root
       - key: MYSQL_PASSWORD
-        generateValue: true
+        value: 1qasw23edfr45tg
       - key: MYSQL_ROOT_PASSWORD
-        generateValue: true
+        value: 1qasw23edfr45tg
+
 
