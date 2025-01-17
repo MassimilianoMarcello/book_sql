@@ -2,22 +2,23 @@ services:
   - type: pserv
     name: mysql-database
     plan: free
-    envVars:
-      MYSQL_DATABASE: massidatabase_test
-      MYSQL_USER: root
-      MYSQL_PASSWORD: 1qasw23edfr45tg
-      MYSQL_ROOT_PASSWORD: 1qasw23edfr45tg
+    env: mysql
+  autoDeploy: false
+  disk:
+    name: mysql
+    mountPath: /var/lib/mysql
+    sizeGB: 10
+  envVars:
+  - fromGroup: mysql
 
 envVarGroups:
-  - name: mysql
-    envVars:
-      - key: MYSQL_DATABASE
-        value: massidatabase_test
-      - key: MYSQL_USER
-        value: root
-      - key: MYSQL_PASSWORD
-        value: 1qasw23edfr45tg
-      - key: MYSQL_ROOT_PASSWORD
-        value: 1qasw23edfr45tg
-
-
+- name: mysql
+  envVars:
+  - key: MYSQL_DATABASE
+    value: mysql
+  - key: MYSQL_USER
+    value: mysql
+  - key: MYSQL_PASSWORD
+    generateValue: true
+  - key: MYSQL_ROOT_PASSWORD
+    generateValue: true
