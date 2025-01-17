@@ -1,5 +1,5 @@
 services:
-  - type: mysql
+  - type: pserv
     name: mysql-database
     plan: free
     envVars:
