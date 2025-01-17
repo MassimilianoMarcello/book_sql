@@ -1,0 +1,12 @@
+services:
+  - type: mysql
+    name: mysql-database
+    env: mysql
+    plan: free
+    disk:
+      size: 10GB
+    envVars:
+      MYSQL_DATABASE: massidatabase_test      # Nome del database
+      MYSQL_USER: root                        # Nome utente MySQL
+      MYSQL_PASSWORD: 1qasw23edfr45tg        # Password dell'utente MySQL
+      MYSQL_ROOT_PASSWORD: 1qasw23edfr45tg   # Password dell'utente root MySQL
