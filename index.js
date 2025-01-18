@@ -25,7 +25,7 @@ import bookRoutes from './routes/book.js';
 import cartRoutes from './routes/cart.js';
 // load environment variables
 dotenv.config();
-const PORT = process.env.PORT || 5003;
+const PORT = process.env.PORT || 3306;
 
 // construct path
 const __filename = fileURLToPath(import.meta.url);
